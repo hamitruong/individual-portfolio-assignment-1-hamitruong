@@ -18,7 +18,7 @@ class Reader implements Runnable {
 
     public Reader(Socket Server, String name) throws IOException {
         server = Server;
-        in = new BufferedReader(new InputStreamReader(server.getInputStream()));
+        in = new BufferedReader(new InputStreamReader(server.getInputStream()));                    // Connnects the client and server
         Out = new PrintWriter(server.getOutputStream(), true);
         this.botName = name;
 
@@ -33,7 +33,7 @@ class Reader implements Runnable {
 
                 if (fromServer != null) {
 
-                    if (!fromServer.contains("/disconnect " + botName)) {
+                    if (!fromServer.contains("/disconnect " + botName)) {                           // If the bot get disconnected
                         if (fromServer.startsWith("Host: ") && !fromServer.contains("/disconnect")) {
 
                             System.out.println(fromServer);
@@ -42,7 +42,7 @@ class Reader implements Runnable {
 
                         } else {
                             System.out.println(fromServer);
-                            if (!fromServer.contains("/disconnect")) {
+                            if (!fromServer.contains("/disconnect")) {                              // If it's getting disconnected, then the bot will respond with "Ah man...."
                                 continue;
                             }
 
@@ -79,14 +79,14 @@ public class Client {
     public Client(String host, int port, String navn) throws IOException {
 
         Socket socket = new Socket(host, port);
-        System.out.println(navn + " has been connected.... waiting for dialog");
+        System.out.println(navn + " has been connected.... waiting for dialog");                // When the server and the bot are connnected, the bot will wait for a dialog
 
         Reader con = new Reader(socket, navn);
         new Thread(con).start();
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {                                 // It will get the options of bots, and line it up
 
         List list = new List();
 
@@ -96,7 +96,7 @@ public class Client {
 
         ArrayList<String> availableBots = list.getAvailableBots();
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));   // Next step is to choose a bot from the option list
 
         System.out.println("Choose your bot");
         System.out.println(availableBots);
@@ -105,7 +105,7 @@ public class Client {
 
         for (String bot : availableBots) {
             if (bot.equals(start)) {
-                Client localhost = new Client("localhost", 2410, start);
+                Client localhost = new Client("localhost", 2410, start);                // Connecting the server to the right ip
                 list.moveBotToUsedList(bot);
                 break;
             }

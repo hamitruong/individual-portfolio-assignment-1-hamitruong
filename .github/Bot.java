@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 class List {
 
-    public ArrayList<String> availableBots = new ArrayList<>();
+    public ArrayList<String> availableBots = new ArrayList<>();  // List up the alternative bots
     public ArrayList<String> usedBots = new ArrayList<>();
 
-    public void addBots() {
+    public void addBots() {                                      // Adding alternative bots
         availableBots.add("Gemini");
         availableBots.add("Virgo");
         availableBots.add("Pisces");
@@ -32,7 +32,7 @@ public class Bot {
     private final String[] verbs;
 
     {
-        verbs = new String[]{"climb", "eat", "sing", "box", "sail"};
+        verbs = new String[]{"climb", "eat", "sing", "box", "sail"};     // Single verbs to choose between, to start the dialog
     }
 
     private String botAnswer;
@@ -40,14 +40,14 @@ public class Bot {
     private boolean foundVerbBoolean = false;
 
     private final Random random = new Random();
-    private final int randomNumb = random.nextInt();
+    private final int randomNumb = random.nextInt(4);                   // The number 4 in random.nextInt is for the answer suggestions of the bot
 
     public Bot(String stringClient, String botName) {
 
-        String[] greet = {"hi", "hey", "hello", "hallo"};
+        String[] greet = {"hi", "hey", "hello", "hallo"};               // The conversation can also start with these words
         for (String s : greet) {
             if (stringClient.contains(s)) {
-                setBotAnswer("Hello there!");
+                setBotAnswer("Hello there!");                           // Then the bot will answer if you use one of the greetings over
             }
         }
 
@@ -65,7 +65,7 @@ public class Bot {
         this.botAnswer = answerBot;
     }
 
-    public void botToStart(String botName) {
+    public void botToStart(String botName) {                            // Checking up for which bot has been chosen, and which one to run
 
         if ("Gemini".equals(botName)) {
             botGemini();
@@ -76,7 +76,7 @@ public class Bot {
         } else if ("Pisces".equals(botName)) {
             botPisces();
         } else {
-            throw new IllegalStateException("Unexpected value: " + botName);
+            throw new IllegalStateException("Unexpected value: " + botName); // If none of them are choosen, it will be denied
         }
 
 
@@ -84,7 +84,7 @@ public class Bot {
 
     private void botPisces () {
 
-        if (foundVerbBoolean) {
+        if (foundVerbBoolean) {                                              // The bot will answer these sentences if it can read the verb
             String[] array = {
                     foundVerb + "ing " + "is fun!",
                     "Yes let's do " + foundVerb,
@@ -93,7 +93,7 @@ public class Bot {
             };
             setBotAnswer(array[randomNumb]);
         } else {
-            setBotAnswer("Tell me something that makes sense");
+            setBotAnswer("Tell me something that makes sense");              // If the bot doesn't recognize the verb, it will say so
         }
     }
 

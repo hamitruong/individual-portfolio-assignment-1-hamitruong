@@ -20,20 +20,20 @@ public class server {
     static final ThreadLocal<ExecutorService> pool = ThreadLocal.withInitial(() ->
             Executors.newFixedThreadPool(4));
 
-    public server(int port) throws Exception {
+    public server(int port) throws Exception {                                              // Trying to connect the bot with the server
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             var input = new input(clientList);
             new Thread(input).start();
 
-            out.println("WELCOME TO THE SERVER");
+            out.println("WELCOME TO THE SERVER");                                           // When the server and client has been connected, it will print out this welcome
 
             do {
 
-                if (clientList.isEmpty()) {
+                if (clientList.isEmpty()) {                                                 // When it still progressing to connect
                     out.println("WAITING FOR A BOT TO JOIN");
                 }
 
-                Socket s = serverSocket.accept();
+                Socket s = serverSocket.accept();                                           // The socket has connected, then the bot may join
 
                 out.println("a bot joined the room from received ping " + s.getRemoteSocketAddress());
 
@@ -51,7 +51,7 @@ public class server {
 
     static class input implements Runnable {
 
-        final ThreadLocal<BufferedReader> inRead = ThreadLocal.withInitial(() ->
+        final ThreadLocal<BufferedReader> inRead = ThreadLocal.withInitial(() ->            // Creating a local thread local variable
                 new BufferedReader(new InputStreamReader(in)));
 
         CopyOnWriteArrayList<client> arrayList;
@@ -70,7 +70,7 @@ public class server {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if (Objects.equals(read2Client, "exit")) {
+                if (Objects.equals(read2Client, "exit")) {                                  // Exit the server if the host are typing so
                     exit(0);
                 }
 
